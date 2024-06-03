@@ -106,7 +106,8 @@ def mergePdf():
 
 def otherfunctions():
     try:
-        import os
+        st.spinner("Loading resources. May take some time!")
+	import os
         import sys
         import traceback
         from io import BytesIO
