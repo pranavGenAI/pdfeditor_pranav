@@ -555,7 +555,7 @@ page_names_to_funcs[demo_name]()
 footer = """
 <style>
 a:link, a:visited {
-    color: orange;
+    color: White;
     background-color: transparent;
     text-decoration: underline;
 }
