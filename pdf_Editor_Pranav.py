@@ -59,10 +59,6 @@ video_html = """
 		"""
 
 st.markdown(video_html, unsafe_allow_html=True)
-
-
-
-
 st.header("Welcome to PDF Editor Tool by Pranav!")
 
 
