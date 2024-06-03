@@ -316,7 +316,7 @@ def otherfunctions():
 
             
             with lcol.expander("🤏 Reduce PDF size"):
-		    st.markdown("Coming soon...")
+                st.markdown("Coming soon...")
                 # # TODO: Add password back to converted PDF if original was protected
                 # st.caption("Will remove password if present")
 
