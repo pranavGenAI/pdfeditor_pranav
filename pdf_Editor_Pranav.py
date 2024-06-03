@@ -538,7 +538,7 @@ page_names_to_funcs = {
 st.markdown("""
 <style>
     [data-testid=stSidebar] {
-        background-color: #00000080;
+        background-color: #00000090;
     }
 </style>
 """, unsafe_allow_html=True)
