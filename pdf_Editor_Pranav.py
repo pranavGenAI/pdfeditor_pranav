@@ -497,7 +497,7 @@ def pdf2split():
     st.write(
         """
         split all pages of your pdf
-"""
+	"""
     )
     
     uploaded_file = st.file_uploader('Choose your .pdf file', type="pdf")
@@ -552,39 +552,53 @@ st.sidebar.header("Select the operation")
 demo_name = st.sidebar.selectbox("Click for options", page_names_to_funcs.keys())
 page_names_to_funcs[demo_name]()
 
-
-
-
-footer="""<style>
-a:link , a:visited{
-color: White;
-background-color: transparent;
-text-decoration: underline;
+footer = """
+<style>
+a:link, a:visited {
+    color: white;
+    background-color: transparent;
+    text-decoration: underline;
 }
 
-a:hover,  a:active {
-color: orange;
-text-decoration: underline;
+a:hover, a:active {
+    color: orange;
+    text-decoration: underline;
 }
 
 .footer {
-position: fixed;
-left: 0px;
-bottom: 0;
-width: 100%;
-height: 30px;
-background-color: #80808060;
-color: White;
-text-align: center;
-
-
+    position: fixed;
+    left: 0px;
+    bottom: 0;
+    width: 100%;
+    height: 30px;
+    background-color: #80808060;
+    color: white;
+    text-align: center;
+    font-size: 20px; /* Adjust font size here */
 }
 
+.footer p {
+    transition: all 0.3s ease-in-out;
+}
 
+.footer p:hover {
+    transform: scale(1.1); /* Zoom effect */
+}
 
+@keyframes glow {
+    0% { color: white; }
+    50% { color: orange; }
+    100% { color: white; }
+}
+
+.footer p:hover {
+    animation: glow 1s infinite alternate; /* Glow effect */
+}
 </style>
 <div class="footer">
-<p>Developed by <a class="normal-font"; text-align: center;"' href="https://www.linkedin.com/in/pranav-baviskar" target="_blank" > Pranav Baviskar</a></p>
+    <p>Developed by <a class="normal-font" href="https://www.linkedin.com/in/pranav-baviskar" target="_blank">Pranav Baviskar</a></p>
 </div>
 """
-st.write(footer,unsafe_allow_html=True)
+
+st.write(footer, unsafe_allow_html=True)
+
