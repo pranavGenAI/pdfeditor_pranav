@@ -104,7 +104,7 @@ def load_pdf_from_url(
         value="https://getsamplefiles.com/download/pdf/sample-1.pdf",
     )
 
-    @st.cache_data
+    @st.experimental_memo
     def _cached_get_url(url: str) -> requests.Response:
         return requests.get(url)
 
@@ -214,13 +214,13 @@ def preview_pdf(
             handle_unencrypted_pdf(pdf, key)
 
 
-@st.cache_data
+@st.experimental_memo
 def is_pdf_datetime(s: str) -> bool:
     pattern = r"^D:\d{14}\+\d{2}\'\d{2}\'$"
     return bool(re.match(pattern, s))
 
 
-@st.cache_data
+@st.experimental_memo
 def convert_pdf_datetime(pdf_datetime: str) -> str:
     # Remove the 'D:' at the beginning
     pdf_datetime = pdf_datetime[2:]
@@ -238,7 +238,7 @@ def convert_pdf_datetime(pdf_datetime: str) -> str:
     )
 
 
-@st.cache_data
+@st.experimental_memo
 def parse_page_numbers(page_numbers_str):
     # Split the input string by comma or hyphen
     parts = page_numbers_str.split(",")
@@ -308,7 +308,7 @@ def decrypt_pdf(reader: PdfReader, password: str, filename: str) -> None:
         writer.write(f)
 
 
-@st.cache_data
+@st.experimental_memo
 def remove_images(pdf: bytes, remove_images: bool, password: str) -> bytes:
     reader = PdfReader(BytesIO(pdf))
 
@@ -358,7 +358,7 @@ def reduce_image_quality(pdf: bytes, quality: int, password: str) -> bytes:
     return bytes_stream.getvalue()
 
 
-@st.cache_data
+@st.experimental_memo
 def compress_pdf(pdf: bytes, password: str) -> bytes:
     reader = PdfReader(BytesIO(pdf))
 
