@@ -571,8 +571,8 @@ a:hover, a:active {
     bottom: 0;
     width: 100%;
     height: 30px;
-    background-color: #80808060;
-    color: white;
+    background-color: #80808070;
+    color: orange;
     text-align: center;
     font-size: 20px; /* Adjust font size here */
 }
@@ -587,8 +587,8 @@ a:hover, a:active {
 
 @keyframes glow {
     0% { color: white; }
-    50% { color: orange; }
-    100% { color: white; }
+    50% { color: aqua; }
+    100% { color: aqua; }
 }
 
 .footer p:hover {
@@ -601,4 +601,3 @@ a:hover, a:active {
 """
 
 st.write(footer, unsafe_allow_html=True)
-
