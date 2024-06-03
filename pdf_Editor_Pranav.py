@@ -511,7 +511,7 @@ def pdf2split():
     col1, col2 = st.columns([1, 1])
     with col1:
         if uploaded_file is not None:
-            st.markdown("<h3>Split of PDF File<br/> by Each Page</h3>", unsafe_allow_html=True)
+            st.markdown("<h3>Split the PDF File<br/> by Each Page</h3>", unsafe_allow_html=True)
             if st.button("Split Each Page"):
 
 
@@ -531,7 +531,7 @@ def pdf2split():
 
     with col2:
         if uploaded_file:
-                st.markdown("<h3>Split a PDF File by Specific Page Ranges</h3>", unsafe_allow_html=True)
+                st.markdown("<h3>Split the PDF File by Specific Page Ranges</h3>", unsafe_allow_html=True)
                 st.write("Select the page range:")
                 start_page = st.slider("Start Page", 1, len(inputpdf.pages), 1)
                 end_page = st.slider("End Page", start_page, len(inputpdf.pages), len(inputpdf.pages))
