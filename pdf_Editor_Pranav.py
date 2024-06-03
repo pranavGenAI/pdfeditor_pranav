@@ -59,7 +59,11 @@ video_html = """
 		"""
 
 st.markdown(video_html, unsafe_allow_html=True)
-st.header("Welcome to PDF Editor Tool by Pranav!")
+
+
+
+
+st.header("Welcome to PDF Editor Tool!")
 
 
 
@@ -258,7 +262,7 @@ def otherfunctions():
                             use_container_width=True,
                         )
 
-            with lcol.expander("↔ Resize/Scale PDF"):
+            with rcol.expander("↔ Resize/Scale PDF"):
                 # TODO: Add password back to converted PDF if original was protected
                 st.caption("Will remove password if present")
                 new_size = st.selectbox(
@@ -306,97 +310,96 @@ def otherfunctions():
                             file_name=f"{session_state['name'].rsplit('.')[0]}_scaled_{new_size}_{scale_content}x.pdf",
                             use_container_width=True,
                         )
-	    lcol, rcol = st.columns([0.9,0.1]):
-		
-	            with lcol.expander("🤏 Reduce PDF size"):
-	                # TODO: Add password back to converted PDF if original was protected
-	                st.caption("Will remove password if present")
-	
-	                pdf_small = pdf
-	
-	                lcol, mcol, rcol = st.columns(3)
-	
-	                with lcol:
-	                    remove_duplication = st.checkbox(
-	                        "Remove duplication",
-	                        help="""
-	                        Some PDF documents contain the same object multiple times.  
-	                        For example, if an image appears three times in a PDF it could be embedded three times. 
-	                        Or it can be embedded once and referenced twice.  
-	                        **Note:** This option will not remove objects, rather it will use a reference to the original object for subsequent uses.
-	                        """,
-	                    )
-	
-	                    remove_images = st.checkbox(
-	                        "Remove images",
-	                        help="Remove images from the PDF. Will also remove duplication.",
-	                    )
-	
-	                    if remove_images or remove_duplication:
-	                        pdf_small = utils.remove_images(
-	                            pdf,
-	                            remove_images=remove_images,
-	                            password=session_state.password,
-	                        )
-	
-	                    if st.checkbox(
-	                        "Reduce image quality",
-	                        help="""
-	                        Reduce the quality of images in the PDF. Will also remove duplication.  
-	                        May not work for all cases.
-	                        """,
-	                        disabled=remove_images,
-	                    ):
-	                        quality = st.slider(
-	                            "Quality",
-	                            min_value=0,
-	                            max_value=100,
-	                            value=50,
-	                            disabled=remove_images,
-	                        )
-	                        pdf_small = utils.reduce_image_quality(
-	                            pdf_small,
-	                            quality,
-	                            password=session_state.password,
-	                        )
-	
-	                    if st.checkbox(
-	                        "Lossless compression",
-	                        help="Compress PDF without losing quality",
-	                    ):
-	                        pdf_small = utils.compress_pdf(
-	                            pdf_small, password=session_state.password
-	                        )
-	
-	                    original_size = sys.getsizeof(pdf)
-	                    reduced_size = sys.getsizeof(pdf_small)
-	                    st.caption(
-	                        f"Reduction: {100 - (reduced_size / original_size) * 100:.2f}%"
-	                    )
-	
-	                with mcol:
-	                    st.caption(f"Original size: {original_size / 1024:.2f} KB")
-	                    utils.preview_pdf(
-	                        reader,
-	                        pdf,
-	                        key="other",
-	                        password=session_state.password,
-	                    )
-	                with rcol:
-	                    st.caption(f"Reduced size: {reduced_size / 1024:.2f} KB")
-	                    utils.preview_pdf(
-	                        PdfReader(BytesIO(pdf_small)),
-	                        pdf_small,
-	                        key="other",
-	                        password=session_state.password,
-	                    )
-	                st.download_button(
-	                    "⬇️ Download smaller PDF",
-	                    data=pdf_small,
-	                    mime="application/pdf",
-	                    file_name=f"{filename}_reduced.pdf",
-	                    use_container_width=True,
-	                )
+
+            with lcol.expander("🤏 Reduce PDF size"):
+                # TODO: Add password back to converted PDF if original was protected
+                st.caption("Will remove password if present")
+
+                pdf_small = pdf
+
+                lcol, mcol, rcol = st.columns(3)
+
+                with lcol:
+                    remove_duplication = st.checkbox(
+                        "Remove duplication",
+                        help="""
+                        Some PDF documents contain the same object multiple times.  
+                        For example, if an image appears three times in a PDF it could be embedded three times. 
+                        Or it can be embedded once and referenced twice.  
+                        **Note:** This option will not remove objects, rather it will use a reference to the original object for subsequent uses.
+                        """,
+                    )
+
+                    remove_images = st.checkbox(
+                        "Remove images",
+                        help="Remove images from the PDF. Will also remove duplication.",
+                    )
+
+                    if remove_images or remove_duplication:
+                        pdf_small = utils.remove_images(
+                            pdf,
+                            remove_images=remove_images,
+                            password=session_state.password,
+                        )
+
+                    if st.checkbox(
+                        "Reduce image quality",
+                        help="""
+                        Reduce the quality of images in the PDF. Will also remove duplication.  
+                        May not work for all cases.
+                        """,
+                        disabled=remove_images,
+                    ):
+                        quality = st.slider(
+                            "Quality",
+                            min_value=0,
+                            max_value=100,
+                            value=50,
+                            disabled=remove_images,
+                        )
+                        pdf_small = utils.reduce_image_quality(
+                            pdf_small,
+                            quality,
+                            password=session_state.password,
+                        )
+
+                    if st.checkbox(
+                        "Lossless compression",
+                        help="Compress PDF without losing quality",
+                    ):
+                        pdf_small = utils.compress_pdf(
+                            pdf_small, password=session_state.password
+                        )
+
+                    original_size = sys.getsizeof(pdf)
+                    reduced_size = sys.getsizeof(pdf_small)
+                    st.caption(
+                        f"Reduction: {100 - (reduced_size / original_size) * 100:.2f}%"
+                    )
+
+                with mcol:
+                    st.caption(f"Original size: {original_size / 1024:.2f} KB")
+                    utils.preview_pdf(
+                        reader,
+                        pdf,
+                        key="other",
+                        password=session_state.password,
+                    )
+                with rcol:
+                    st.caption(f"Reduced size: {reduced_size / 1024:.2f} KB")
+                    utils.preview_pdf(
+                        PdfReader(BytesIO(pdf_small)),
+                        pdf_small,
+                        key="other",
+                        password=session_state.password,
+                    )
+                st.download_button(
+                    "⬇️ Download smaller PDF",
+                    data=pdf_small,
+                    mime="application/pdf",
+                    file_name=f"{filename}_reduced.pdf",
+                    use_container_width=True,
+                )
         else:
             st.info("👈 Upload a PDF to start")
 
@@ -539,7 +542,7 @@ page_names_to_funcs = {
 st.markdown("""
 <style>
     [data-testid=stSidebar] {
-        background-color: #00000090;
+        background-color: #00000080;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -551,52 +554,37 @@ page_names_to_funcs[demo_name]()
 
 
 
-footer = """
-<style>
-a:link, a:visited {
-    color: orange;
-    background-color: transparent;
-    text-decoration: underline;
+
+footer="""<style>
+a:link , a:visited{
+color: White;
+background-color: transparent;
+text-decoration: underline;
 }
 
-a:hover, a:active {
-    color: orange;
-    text-decoration: underline;
+a:hover,  a:active {
+color: orange;
+text-decoration: underline;
 }
 
 .footer {
-    position: fixed;
-    left: 0px;
-    bottom: 0;
-    width: 100%;
-    height: 30px;
-    background-color: #80808060;
-    color: white;
-    text-align: center;
-    font-size: 30px; /* Adjust font size here */
+position: fixed;
+left: 0px;
+bottom: 0;
+width: 100%;
+height: 30px;
+background-color: #80808060;
+color: White;
+text-align: center;
+
+
 }
 
-.footer p {
-    transition: all 0.3s ease-in-out;
-}
 
-.footer p:hover {
-    transform: scale(1.1); /* Zoom effect */
-}
 
-@keyframes glow {
-    0% { color: Orange; }
-    50% { color: aqua; }
-    100% { color: aqua; }
-}
-
-.footer p:hover {
-    animation: glow 1s infinite alternate; /* Glow effect */
-}
 </style>
 <div class="footer">
-    <p>Developed by <a class="normal-font" href="https://www.linkedin.com/in/pranav-baviskar" target="_blank">Pranav Baviskar</a></p>
+<p>Developed by <a class="normal-font"; text-align: center;"' href="https://www.linkedin.com/in/pranav-baviskar" target="_blank" > Pranav Baviskar</a></p>
 </div>
 """
-
-st.write(footer, unsafe_allow_html=True)
+st.write(footer,unsafe_allow_html=True)
