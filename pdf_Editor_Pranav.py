@@ -3,7 +3,7 @@ import PyPDF2
 import os
 import time
 import io
-from PyPDF2 import PdfFileReader, PdfFileWriter
+from PyPDF2 import PdfReader, PdfWriter
 from io import StringIO
 from pdfminer.converter import TextConverter
 from pdfminer.layout import LAParams
@@ -19,6 +19,9 @@ from docx import Document
 from fpdf import FPDF
 from streamlit_pdf_viewer import pdf_viewer
 from PyPDF2 import PdfMerger
+
+from spire.pdf.common import *
+from spire.pdf import *
 
 import base64
 from streamlit.components.v1 import html
@@ -489,45 +492,80 @@ def pdfTominer():
 
             st.write(output_string.getvalue())
             st.download_button('Download the text', output_string.getvalue())
+import os
 
-
-# closing the pdf file object 
 def pdf2split():
     st.markdown(f'# {list(page_names_to_funcs.keys())[2]}')
     st.write(
         """
-        split all pages of your pdf
+        Split the pages of your PDF
 	"""
     )
-    
     uploaded_file = st.file_uploader('Choose your .pdf file', type="pdf")
-    if uploaded_file is not None:
-        with st.spinner('Wait for it...'):
+    if uploaded_file:
+        with st.spinner('Processing your pdf...'):
             time.sleep(2)
             st.success('Completed!')
-        # pdfFileObj = open(uploaded_file, 'rb') 
-        st.write("file uploaded")
-        inputpdf = PdfFileReader(uploaded_file)
-
-        for i in range(inputpdf.numPages):
-            output = PdfFileWriter()
-            output.addPage(inputpdf.getPage(i))
-            with open("document-page%s.pdf" % i, "wb") as outputStream:
-                output.write(outputStream)
-            
-            with open(os.path.join("document-page%s.pdf" % i), "rb") as f:
-                PDFbyte = f.read()
-                
-                st.download_button(label="dwonload_split_page"+str(i+1), 
-                    data=PDFbyte,
-                    file_name="split_pdf.pdf",
-                    mime='application/octet-stream')    
+            # pdfFileObj = open(uploaded_file, 'rb') 
+            st.write("file uploaded")
+            inputpdf = PdfReader(uploaded_file)
+    col1, col2 = st.columns([1, 1])
+    with col1:
+        if uploaded_file is not None:
+            st.markdown("<h3>Split of PDF File<br/> by Each Page</h3>", unsafe_allow_html=True)
+            if st.button("Split Each Page"):
 
 
-    st.button("Re-run")
+                for i in range(len(inputpdf.pages)):
+                    output = PdfWriter()
+                    output.add_page(inputpdf.pages[i])
+                    with open(f"document-page{i+1}.pdf", "wb") as outputStream:
+                        output.write(outputStream)
+                    
+                    with open(f"document-page{i+1}.pdf", "rb") as f:
+                        PDFbyte = f.read()
+                        
+                        st.download_button(label=f"Download Split Page {i+1}", 
+                            data=PDFbyte,
+                            file_name=f"split_pdf_page_{i+1}.pdf",
+                            mime='application/octet-stream')    
 
+    with col2:
+        if uploaded_file:
+                st.markdown("<h3>Split a PDF File by Specific Page Ranges</h3>", unsafe_allow_html=True)
+                st.write("Select the page range:")
+                start_page = st.slider("Start Page", 1, len(inputpdf.pages), 1)
+                end_page = st.slider("End Page", start_page, len(inputpdf.pages), len(inputpdf.pages))
 
-   
+                if st.button("Split PDF"):
+                    # Save the uploaded PDF file to a temporary location
+                    with open("temp_pdf.pdf", "wb") as f:
+                        f.write(uploaded_file.getvalue())
+
+                    # Create a PdfDocument object
+                    pdf = PdfDocument()
+                    # Load the PDF file from the temporary location
+                    pdf.LoadFromFile("temp_pdf.pdf")
+
+                    # Split the PDF file into a new PDF file containing the selected page range
+                    pdf_range = PdfWriter()
+                    for page_num in range(start_page, end_page + 1):
+                        pdf_range.add_page(inputpdf.pages[page_num - 1])
+
+                    # Save the split PDF file
+                    pdf_range.write("split_pdf_range.pdf")
+
+                    # Remove the temporary PDF file
+                    os.remove("temp_pdf.pdf")
+
+                    with open("split_pdf_range.pdf", "rb") as f:
+                        PDFbyte_range = f.read()
+                        
+                        st.download_button(label=f"Download Split PDF Range", 
+                            data=PDFbyte_range,
+                            file_name=f"split_pdf_range.pdf",
+                            mime='application/octet-stream')
+
 
 page_names_to_funcs = {
     "Home Page": intro,
@@ -551,6 +589,7 @@ st.sidebar.header("Select the operation")
 
 demo_name = st.sidebar.selectbox("Click for options", page_names_to_funcs.keys())
 page_names_to_funcs[demo_name]()
+
 
 footer = """
 <style>
