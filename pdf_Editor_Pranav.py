@@ -383,20 +383,20 @@ def otherfunctions():
 
                 with mcol:
                     st.caption(f"Original size: {original_size / 1024:.2f} KB")
-                    utils.preview_pdf(
-                        reader,
-                        pdf,
-                        key="other",
-                        password=session_state.password,
-                    )
+                    # utils.preview_pdf(
+                    #     reader,
+                    #     pdf,
+                    #     key="other",
+                    #     password=session_state.password,
+                    # )
                 with rcol:
                     st.caption(f"Reduced size: {reduced_size / 1024:.2f} KB")
-                    utils.preview_pdf(
-                        PdfReader(BytesIO(pdf_small)),
-                        pdf_small,
-                        key="other",
-                        password=session_state.password,
-                    )
+                    # utils.preview_pdf(
+                    #     PdfReader(BytesIO(pdf_small)),
+                    #     pdf_small,
+                    #     key="other",
+                    #     password=session_state.password,
+                    # )
                 st.download_button(
                     "⬇️ Download smaller PDF",
                     data=pdf_small,
@@ -415,10 +415,6 @@ def otherfunctions():
             icon="🥺",
         )
         st.code(traceback.format_exc())
-
-   
-
-
 
 
 # closing the pdf file object 
