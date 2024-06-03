@@ -76,7 +76,7 @@ def intro():
 
 def mergePdf():
     st.markdown(f'# {list(page_names_to_funcs.keys())[4]}')
-    st.write("""Upload all pdf and merge it """)
+ 
 
     uploaded_files = st.file_uploader("Upload all the pdf files", accept_multiple_files=True, type=['pdf'])
     if uploaded_files is not None:
