@@ -9,7 +9,6 @@ streamlit_pdf_viewer
 pypdf
 pandas
 typing
-random
 pathlib
 io
 traceback
