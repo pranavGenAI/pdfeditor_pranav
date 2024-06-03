@@ -258,7 +258,7 @@ def otherfunctions():
                             use_container_width=True,
                         )
 
-            with rcol.expander("↔ Resize/Scale PDF"):
+            with lcol.expander("↔ Resize/Scale PDF"):
                 # TODO: Add password back to converted PDF if original was protected
                 st.caption("Will remove password if present")
                 new_size = st.selectbox(
