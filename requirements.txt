@@ -6,9 +6,7 @@ pdfminer
 docx
 pdf2docx
 streamlit_pdf_viewer
-streamlit.runtime.uploaded_file_manager
 pypdf
-pypdf.errors
 pandas
 typing
 random
