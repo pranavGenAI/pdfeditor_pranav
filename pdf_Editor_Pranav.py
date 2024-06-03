@@ -264,8 +264,10 @@ def otherfunctions():
                             file_name=f"{session_state['name'].rsplit('.')[0]}_rotated_{angle}.pdf",
                             use_container_width=True,
                         )
-
-            with lcol.expander("↔ Resize/Scale PDF"):
+            with lcol.expander("🤏 Reduce PDF size"):
+                st.markdown("Coming soon...")
+  
+            with rcol.expander("↔ Resize/Scale PDF"):
                 # TODO: Add password back to converted PDF if original was protected
                 st.caption("Will remove password if present")
                 new_size = st.selectbox(
@@ -315,9 +317,9 @@ def otherfunctions():
                         )
 
             
-            with rcol.expander("🤏 Reduce PDF size"):
-                st.markdown("Coming soon...")
-                # # TODO: Add password back to converted PDF if original was protected
+            # with lcol.expander("🤏 Reduce PDF size"):
+            #     st.markdown("Coming soon...")
+            #     # # TODO: Add password back to converted PDF if original was protected
                 # st.caption("Will remove password if present")
 
                 # pdf_small = pdf
