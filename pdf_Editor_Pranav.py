@@ -415,9 +415,7 @@ def otherfunctions():
         )
         st.code(traceback.format_exc())
 
-    st.success(
-        "Done"
-    )
+   
 
 
 
