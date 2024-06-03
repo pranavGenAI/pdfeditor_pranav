@@ -306,96 +306,97 @@ def otherfunctions():
                             file_name=f"{session_state['name'].rsplit('.')[0]}_scaled_{new_size}_{scale_content}x.pdf",
                             use_container_width=True,
                         )
-
-            with lcol.expander("🤏 Reduce PDF size"):
-                # TODO: Add password back to converted PDF if original was protected
-                st.caption("Will remove password if present")
-
-                pdf_small = pdf
-
-                lcol, mcol, rcol = st.columns(3)
-
-                with lcol:
-                    remove_duplication = st.checkbox(
-                        "Remove duplication",
-                        help="""
-                        Some PDF documents contain the same object multiple times.  
-                        For example, if an image appears three times in a PDF it could be embedded three times. 
-                        Or it can be embedded once and referenced twice.  
-                        **Note:** This option will not remove objects, rather it will use a reference to the original object for subsequent uses.
-                        """,
-                    )
-
-                    remove_images = st.checkbox(
-                        "Remove images",
-                        help="Remove images from the PDF. Will also remove duplication.",
-                    )
-
-                    if remove_images or remove_duplication:
-                        pdf_small = utils.remove_images(
-                            pdf,
-                            remove_images=remove_images,
-                            password=session_state.password,
-                        )
-
-                    if st.checkbox(
-                        "Reduce image quality",
-                        help="""
-                        Reduce the quality of images in the PDF. Will also remove duplication.  
-                        May not work for all cases.
-                        """,
-                        disabled=remove_images,
-                    ):
-                        quality = st.slider(
-                            "Quality",
-                            min_value=0,
-                            max_value=100,
-                            value=50,
-                            disabled=remove_images,
-                        )
-                        pdf_small = utils.reduce_image_quality(
-                            pdf_small,
-                            quality,
-                            password=session_state.password,
-                        )
-
-                    if st.checkbox(
-                        "Lossless compression",
-                        help="Compress PDF without losing quality",
-                    ):
-                        pdf_small = utils.compress_pdf(
-                            pdf_small, password=session_state.password
-                        )
-
-                    original_size = sys.getsizeof(pdf)
-                    reduced_size = sys.getsizeof(pdf_small)
-                    st.caption(
-                        f"Reduction: {100 - (reduced_size / original_size) * 100:.2f}%"
-                    )
-
-                with mcol:
-                    st.caption(f"Original size: {original_size / 1024:.2f} KB")
-                    utils.preview_pdf(
-                        reader,
-                        pdf,
-                        key="other",
-                        password=session_state.password,
-                    )
-                with rcol:
-                    st.caption(f"Reduced size: {reduced_size / 1024:.2f} KB")
-                    utils.preview_pdf(
-                        PdfReader(BytesIO(pdf_small)),
-                        pdf_small,
-                        key="other",
-                        password=session_state.password,
-                    )
-                st.download_button(
-                    "⬇️ Download smaller PDF",
-                    data=pdf_small,
-                    mime="application/pdf",
-                    file_name=f"{filename}_reduced.pdf",
-                    use_container_width=True,
-                )
+	    lcol, rcol = st.columns([0.9,0.1]):
+		
+	            with lcol.expander("🤏 Reduce PDF size"):
+	                # TODO: Add password back to converted PDF if original was protected
+	                st.caption("Will remove password if present")
+	
+	                pdf_small = pdf
+	
+	                lcol, mcol, rcol = st.columns(3)
+	
+	                with lcol:
+	                    remove_duplication = st.checkbox(
+	                        "Remove duplication",
+	                        help="""
+	                        Some PDF documents contain the same object multiple times.  
+	                        For example, if an image appears three times in a PDF it could be embedded three times. 
+	                        Or it can be embedded once and referenced twice.  
+	                        **Note:** This option will not remove objects, rather it will use a reference to the original object for subsequent uses.
+	                        """,
+	                    )
+	
+	                    remove_images = st.checkbox(
+	                        "Remove images",
+	                        help="Remove images from the PDF. Will also remove duplication.",
+	                    )
+	
+	                    if remove_images or remove_duplication:
+	                        pdf_small = utils.remove_images(
+	                            pdf,
+	                            remove_images=remove_images,
+	                            password=session_state.password,
+	                        )
+	
+	                    if st.checkbox(
+	                        "Reduce image quality",
+	                        help="""
+	                        Reduce the quality of images in the PDF. Will also remove duplication.  
+	                        May not work for all cases.
+	                        """,
+	                        disabled=remove_images,
+	                    ):
+	                        quality = st.slider(
+	                            "Quality",
+	                            min_value=0,
+	                            max_value=100,
+	                            value=50,
+	                            disabled=remove_images,
+	                        )
+	                        pdf_small = utils.reduce_image_quality(
+	                            pdf_small,
+	                            quality,
+	                            password=session_state.password,
+	                        )
+	
+	                    if st.checkbox(
+	                        "Lossless compression",
+	                        help="Compress PDF without losing quality",
+	                    ):
+	                        pdf_small = utils.compress_pdf(
+	                            pdf_small, password=session_state.password
+	                        )
+	
+	                    original_size = sys.getsizeof(pdf)
+	                    reduced_size = sys.getsizeof(pdf_small)
+	                    st.caption(
+	                        f"Reduction: {100 - (reduced_size / original_size) * 100:.2f}%"
+	                    )
+	
+	                with mcol:
+	                    st.caption(f"Original size: {original_size / 1024:.2f} KB")
+	                    utils.preview_pdf(
+	                        reader,
+	                        pdf,
+	                        key="other",
+	                        password=session_state.password,
+	                    )
+	                with rcol:
+	                    st.caption(f"Reduced size: {reduced_size / 1024:.2f} KB")
+	                    utils.preview_pdf(
+	                        PdfReader(BytesIO(pdf_small)),
+	                        pdf_small,
+	                        key="other",
+	                        password=session_state.password,
+	                    )
+	                st.download_button(
+	                    "⬇️ Download smaller PDF",
+	                    data=pdf_small,
+	                    mime="application/pdf",
+	                    file_name=f"{filename}_reduced.pdf",
+	                    use_container_width=True,
+	                )
         else:
             st.info("👈 Upload a PDF to start")
 
