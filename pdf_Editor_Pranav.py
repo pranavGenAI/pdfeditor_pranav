@@ -477,9 +477,9 @@ def pdfTominer():
                 
             with st.spinner('Wait for it...'):
                 time.sleep(2)
-                st.success('Completed!')
+                st.success('File uploaded!')
             # pdfFileObj = open(uploaded_file, 'rb') 
-            st.write("file uploaded")
+      
             output_string = StringIO()
         
             parser = PDFParser(uploaded_miner)
