@@ -106,8 +106,7 @@ def mergePdf():
 
 def otherfunctions():
     try:
-        st.spinner("Loading resources. May take some time!")
-	import os
+        import os
         import sys
         import traceback
         from io import BytesIO
@@ -315,6 +314,7 @@ def otherfunctions():
                             use_container_width=True,
                         )
 
+            
             with lcol.expander("🤏 Reduce PDF size"):
                 # TODO: Add password back to converted PDF if original was protected
                 st.caption("Will remove password if present")
