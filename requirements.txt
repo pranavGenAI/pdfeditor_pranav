@@ -6,7 +6,6 @@ pdfminer
 docx
 pdf2docx
 streamlit_pdf_viewer
-contextlib
 streamlit.runtime.uploaded_file_manager
 pypdf
 pypdf.errors
