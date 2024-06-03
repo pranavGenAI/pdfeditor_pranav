@@ -505,9 +505,8 @@ def pdf2split():
     if uploaded_file:
         with st.spinner('Processing your pdf...'):
             time.sleep(2)
-            st.success('Completed!')
+            st.success('File uploaded!')
             # pdfFileObj = open(uploaded_file, 'rb') 
-            st.write("file uploaded")
             inputpdf = PdfReader(uploaded_file)
     col1, col2 = st.columns([1, 1])
     with col1:
