@@ -141,7 +141,7 @@ def otherfunctions():
                 st.info(
                     "* Upload from disk/URL\n"
                     "* Preview content/metadata\n"
-                    "* Extract text/images\n"
+                    "* Extract images\n"
                     "* Add/remove password\n"
                     "* Rotate/resize PDF\n"
                     "* Reduce PDF size\n"
