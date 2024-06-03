@@ -3,7 +3,6 @@ gradio
 PyPDF2
 streamlit
 pdfminer
-PIL
 docx
 pdf2docx
 streamlit_pdf_viewer
