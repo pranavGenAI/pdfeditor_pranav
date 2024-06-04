@@ -266,53 +266,55 @@ def otherfunctions():
                         )
 
             with rcol.expander("↔ Resize/Scale PDF"):
+                st.markdown("Coming soon...")
+
                 # TODO: Add password back to converted PDF if original was protected
-                st.caption("Will remove password if present")
-                new_size = st.selectbox(
-                    "New size",
-                    options={
-                        attr: getattr(PaperSize, attr)
-                        for attr in dir(PaperSize)
-                        if not attr.startswith("__")
-                        and not callable(getattr(PaperSize, attr))
-                    },
-                    index=4,
-                    help="Changes will be apparant only on printing the PDF",
-                )
+                # st.caption("Will remove password if present")
+                # new_size = st.selectbox(
+                #     "New size",
+                #     options={
+                #         attr: getattr(PaperSize, attr)
+                #         for attr in dir(PaperSize)
+                #         if not attr.startswith("__")
+                #         and not callable(getattr(PaperSize, attr))
+                #     },
+                #     index=4,
+                #     help="Changes will be apparant only on printing the PDF",
+                # )
 
-                scale_content = st.slider(
-                    "Scale content",
-                    min_value=0.1,
-                    max_value=2.0,
-                    step=0.1,
-                    value=1.0,
-                    help="Scale content independently of the page size",
-                    format="%fx",
-                )
+                # scale_content = st.slider(
+                #     "Scale content",
+                #     min_value=0.1,
+                #     max_value=2.0,
+                #     step=0.1,
+                #     value=1.0,
+                #     help="Scale content independently of the page size",
+                #     format="%fx",
+                # )
 
-                with PdfWriter() as writer:
-                    for page in reader.pages:
-                        page.scale_to(
-                            width=getattr(PaperSize, new_size).width,
-                            height=getattr(PaperSize, new_size).height,
-                        )
-                        op = Transformation().scale(sx=scale_content, sy=scale_content)
-                        page.add_transformation(op)
-                        writer.add_page(page)
+                # with PdfWriter() as writer:
+                #     for page in reader.pages:
+                #         page.scale_to(
+                #             width=getattr(PaperSize, new_size).width,
+                #             height=getattr(PaperSize, new_size).height,
+                #         )
+                #         op = Transformation().scale(sx=scale_content, sy=scale_content)
+                #         page.add_transformation(op)
+                #         writer.add_page(page)
 
-                    # TODO: Write to byte_stream
-                    writer.write("scaled.pdf")
+                #     # TODO: Write to byte_stream
+                #     writer.write("scaled.pdf")
 
-                    with open("scaled.pdf", "rb") as f:
-                        st.caption("Content scaling preview")
-                        pdf_viewer(f.read(), height=250, width=300)
-                        st.download_button(
-                            "⬇️ Download scaled PDF",
-                            data=f,
-                            mime="application/pdf",
-                            file_name=f"{session_state['name'].rsplit('.')[0]}_scaled_{new_size}_{scale_content}x.pdf",
-                            use_container_width=True,
-                        )
+                #     with open("scaled.pdf", "rb") as f:
+                #         st.caption("Content scaling preview")
+                #         pdf_viewer(f.read(), height=250, width=300)
+                #         st.download_button(
+                #             "⬇️ Download scaled PDF",
+                #             data=f,
+                #             mime="application/pdf",
+                #             file_name=f"{session_state['name'].rsplit('.')[0]}_scaled_{new_size}_{scale_content}x.pdf",
+                #             use_container_width=True,
+                #         )
 
             
             with lcol.expander("🤏 Reduce PDF size"):
