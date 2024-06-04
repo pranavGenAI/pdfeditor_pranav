@@ -26,7 +26,8 @@ from spire.pdf import *
 import base64
 from streamlit.components.v1 import html
 
-st.set_page_config(layout="wide")
+st.set_page_config(layout="wide", page_title="PDF Editor", page_icon="📝",
+
 st.markdown("""
 <style>
     header {visibility: hidden;}
