@@ -397,6 +397,7 @@ def pdf2text():
                 
             # To read file as bytes:
             bytes_data = uploaded_file.getvalue()
+		    st.write(bytes_data)
             cv = Converter(stream=bytes_data)
             out_stream = io.BytesIO()
             cv.convert(out_stream)
