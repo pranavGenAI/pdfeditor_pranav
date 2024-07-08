@@ -394,7 +394,7 @@ def pdf2text():
     
     if uploaded_file is not None:
         if st.button("Convert .pdf to .docx"):
-                
+            st.write(uploaded_file)    
             # To read file as bytes:
             bytes_data = uploaded_file.getvalue()
             #st.write(bytes_data)
